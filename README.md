@@ -7,6 +7,7 @@ This project was built as part of a Hackathon Project to demonstrate how technol
 
 🚀 Features
 
+
 🏠 Dashboard
 
 Overview of volunteer contributions
@@ -15,11 +16,13 @@ Causes supported
 Global ranking of volunteers
 Visual charts showing volunteer impact
 
+
 🔍 Explore NGOs
 
 Search NGOs by name, cause, or required skills
 Smart search suggestions
 Browse organizations that need volunteers
+
 
 📊 Impact Report
 
@@ -28,11 +31,13 @@ Economic value created through volunteering
 Number of lives impacted
 Data visualization using charts
 
+
 🏆 Badges & Achievements
 
 Earn badges for volunteer contributions
 Track service hours
 Skill recognition system
+
 
 👤 Volunteer Profile
 
@@ -42,13 +47,15 @@ Verified skills
 Achievement badges
 Monthly impact analytics
 
+
 🛠️ Tech Stack
 
-HTML5
-CSS3
-JavaScript
-Chart.js (for data visualization)
+HTML5, 
+CSS3, 
+JavaScript, 
+Chart.js (for data visualization), 
 Google Fonts
+
 
 🎯 Project Objective
 
@@ -59,6 +66,7 @@ Track their social impact
 Showcase volunteering achievements
 Connect with meaningful causes
 
+
 🌱 Future Improvements
 
 NGO registration system
@@ -66,6 +74,7 @@ Volunteer event scheduling
 AI-based volunteer recommendation system
 Real-time collaboration tools
 Backend database integration
+
 
 👩‍💻 Author
 
