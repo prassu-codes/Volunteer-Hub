@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Volunteer | Login & Registration</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Auth Specific Styles -->
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body class="auth-body">
+
+    <!-- Auth Container -->
+    <div class="auth-wrapper">
+        <div class="auth-box">
+
+            <!-- Left Side: Branding / Illustration -->
+            <div class="auth-banner">
+                <div class="logo">
+                    <i class="fa-solid fa-hands-holding-child"></i>
+                    <span>Smart Volunteer</span>
+                </div>
+                <h2>Make a Difference Today!</h2>
+                <p>Join the community connecting passionate volunteers with non-profits seamlessly.</p>
+                <div class="auth-banner-graphics">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </div>
+            </div>
+
+            <!-- Right Side: Forms -->
+            <div class="auth-forms-container">
+
+                <!-- Toggle Form Navigation -->
+                <div class="auth-toggle">
+                    <button class="toggle-btn active" id="btn-login" onclick="switchForm('login')">Login</button>
+                    <button class="toggle-btn" id="btn-register" onclick="switchForm('register')">Register</button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <div class="auth-form-wrap" id="login-form">
+                    <h3>Welcome Back! 👋</h3>
+                    <p class="auth-subtitle">Please enter your details to sign in.</p>
+
+                    <form id="form-login" onsubmit="handleLogin(event)">
+                        <div class="input-group">
+                            <label>Username / Name</label>
+                            <div class="input-field">
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" id="login-name" placeholder="e.g. Brad Pitt" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Password</label>
+                            <div class="input-field">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="login-pwd" placeholder="••••••••" required>
+                            </div>
+                        </div>
+
+                        <div class="auth-actions">
+                            <label class="remember-me">
+                                <input type="checkbox"> Remember me
+                            </label>
+                            <a href="#" class="forgot-pwd">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Sign In</button>
+                    </form>
+                </div>
+
+                <!-- REGISTRATION FORM -->
+                <div class="auth-form-wrap" id="register-form" style="display: none;">
+                    <h3>Create an Account ✨</h3>
+                    <p class="auth-subtitle">Join us to start making an impact.</p>
+
+                    <form onsubmit="handleAuth(event)">
+                        <div class="input-group">
+                            <label>Full Name (*)</label>
+                            <div class="input-field">
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" placeholder="e.g. Angelina Jolie" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Email Address (*)</label>
+                            <div class="input-field">
+                                <i class="fa-regular fa-envelope"></i>
+                                <input type="email" placeholder="angelina@example.com" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Contact Number (*)</label>
+                            <div class="input-field">
+                                <i class="fa-solid fa-phone"></i>
+                                <input type="tel" placeholder="+1 (555) 000-0000" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Current Location (*)</label>
+                            <div class="input-field">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <input type="text" placeholder="e.g. Los Angeles, CA" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Password (*)</label>
+                            <div class="input-field">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" placeholder="Create a password" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" style="margin-top: 16px;">Register Account</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth JS Logic -->
+    <script>
+        function switchForm(formType) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const btnLogin = document.getElementById('btn-login');
+            const btnRegister = document.getElementById('btn-register');
+
+            if (formType === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                btnLogin.classList.add('active');
+                btnRegister.classList.remove('active');
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                btnLogin.classList.remove('active');
+                btnRegister.classList.add('active');
+            }
+        }
+
+        // Handle Login Submission
+        function handleLogin(event) {
+            event.preventDefault();
+
+            // Capture the login name/username
+            const loginName = document.getElementById('login-name').value;
+            let userData = JSON.parse(localStorage.getItem('smartVol_user'));
+
+            if (!userData) {
+                // If logging in without registering first, inject prototype data based on typed name
+                userData = {
+                    name: loginName,
+                    email: loginName.toLowerCase().replace(/\s+/g, '') + "@example.com",
+                    phone: "+1 (555) 000-0000",
+                    location: "Global User",
+                    joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                };
+            } else {
+                // Override the name so the dashboard reflects whoever just logged in
+                userData.name = loginName;
+            }
+
+            localStorage.setItem('smartVol_user', JSON.stringify(userData));
+
+            simulateAuth(event.target);
+        }
+
+        // Handle Registration Submission
+        function handleRegister(event) {
+            event.preventDefault();
+
+            // Capture specific registration info
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const phone = document.getElementById('reg-phone').value;
+            const location = document.getElementById('reg-location').value;
+
+            // Save info to local storage
+            const userData = {
+                name: name,
+                email: email,
+                phone: phone,
+                location: location,
+                joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+            };
+            localStorage.setItem('smartVol_user', JSON.stringify(userData));
+
+            simulateAuth(event.target);
+        }
+
+        // Shared Animation / Redirect Logic
+        function simulateAuth(form) {
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...';
+            btn.style.opacity = '0.8';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1200);
+        }
+    </script>
+</body>
+
+</html>

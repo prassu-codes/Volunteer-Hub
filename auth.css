@@ -1,0 +1,248 @@
+/* --- AUTHENTICATION PORTAL STYLES --- */
+
+/* Inherits colors from root styles.css */
+.auth-body {
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.auth-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    background: var(--surface);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border);
+    animation: fadeInSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* LEFT BANNER */
+.auth-banner {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 48px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-banner .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: auto;
+    color: white;
+}
+
+.auth-banner h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    z-index: 2;
+}
+
+.auth-banner p {
+    font-size: 16px;
+    opacity: 0.9;
+    line-height: 1.6;
+    margin-bottom: auto;
+    z-index: 2;
+}
+
+.auth-banner-graphics {
+    position: absolute;
+    right: -40px;
+    bottom: -60px;
+    font-size: 250px;
+    color: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+/* RIGHT FORMS */
+.auth-forms-container {
+    flex: 1;
+    padding: 48px;
+    background: var(--surface);
+}
+
+.auth-toggle {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--border);
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.toggle-btn.active {
+    color: var(--primary);
+}
+
+.toggle-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 3px 3px 0 0;
+}
+
+.auth-form-wrap h3 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    font-size: 15px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.input-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-field i {
+    position: absolute;
+    left: 16px;
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    background: #f8fafc;
+    transition: all 0.3s;
+    font-family: inherit;
+    color: var(--text-main);
+}
+
+.input-field input:focus {
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.auth-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.forgot-pwd {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.forgot-pwd:hover {
+    text-decoration: underline;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.submit-btn:hover {
+    background: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(99, 102, 241, 0.3);
+}
+
+/* Responsive auth stack */
+@media (max-width: 768px) {
+    .auth-wrapper {
+        flex-direction: column;
+    }
+
+    .auth-banner {
+        padding: 32px;
+    }
+
+    .auth-forms-container {
+        padding: 32px;
+    }
+}

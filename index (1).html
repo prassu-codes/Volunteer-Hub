@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VolunteerHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-hands-holding-circle"></i>
+                <span>VolunteerHub</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" id="nav-dashboard" onclick="showView('dashboard')"><i
+                        class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="#" class="nav-item" id="nav-explore" onclick="showView('explore')"><i
+                        class="fa-solid fa-magnifying-glass"></i> Explore NGOs</a>
+                <a href="#" class="nav-item" id="nav-impact" onclick="showView('impact')"><i
+                        class="fa-solid fa-chart-pie"></i> Impact Report</a>
+                <a href="#" class="nav-item" id="nav-badges" onclick="showView('badges')"><i
+                        class="fa-solid fa-award"></i> Badges</a>
+                <a href="#" class="nav-item" id="nav-profile" onclick="showView('profile')"><i
+                        class="fa-solid fa-user"></i> My Profile</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://t4.ftcdn.net/jpg/04/86/97/27/360_F_486972750_hQVbv6yRJ9e615Eo3qvnujq7abDrXFGi.jpg" alt="Avatar" class="avatar">
+                    <div class="user-text">
+                        <h4>Prasanna Yerra</h4>
+                        <p>Social Contributor </p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="auth.html"
+                        style="text-decoration: none; color: #ef4444; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; border-radius: 8px; transition: background 0.3s;"
+                        onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='transparent'">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="greeting">
+                    <h1>Welcome back, Prasanna! 👋</h1>
+                    <p>You have <span style="color:var(--primary); font-weight:700;">3 new premium matches</span> today
+                        based on your skills.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="notif-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="add-btn"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </header>
+
+            <div id="dashboard-view">
+                <section class="impact-tracker" id="impact-section">
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fa-solid fa-clock"></i></div>
+                        <div class="stat-details">
+                            <h3>124h</h3>
+                            <p>Hours Contributed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                        <div class="stat-details">
+                            <h3>8</h3>
+                            <p>Causes Supported</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-medal"></i></div>
+                        <div class="stat-details">
+                            <h3>Top 5%</h3>
+                            <p>Global Ranking</p>
+                        </div>
+                    </div>
+                    <div class="stat-card chart-card">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                </section>
+
+                <section class="smart-matches">
+                    <div class="section-header">
+                        <div class="header-left">
+                            <h2>🔥 Top Recommendations For You</h2>
+                            <span class="algo-badge"><i class="fa-solid fa-microchip"></i> AI Matched</span>
+                        </div>
+                        <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="matches-grid" id="matches-grid">
+                    </div>
+                </section>
+            </div>
+
+            <div id="explore-view" style="display: none;">
+                <div class="section-header" style="margin: 20px 0 0 20px;">
+                    <h2>🔍 Explore NGOs</h2>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Find the perfect organization to volunteer
+                        your skills.</p>
+                </div>
+                <div id="explore-ngos"
+                    style="background: var(--surface); border: none; box-shadow: var(--shadow-soft); padding: 32px; border-radius: var(--radius); margin-top: 24px;">
+                    <div style="position: relative; margin-bottom: 24px;">
+                        <i class="fa-solid fa-search"
+                            style="position: absolute; left: 16px; top: 18px; color: var(--text-muted);"></i>
+                        <input type="text" id="ngo-search"
+                            placeholder="Search NGOs by name, cause, or required skills..." oninput="filterNGOs()"
+                            style="width: 100%; padding: 16px 16px 16px 48px; border: 1px solid var(--border); border-radius: 12px; font-size: 15px; outline: none; transition: all 0.3s; background-color: var(--bg);">
+
+                        <div class="suggestion-chips"
+                            style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center;">
+                            <span style="font-size: 13px; font-weight: 700; color: var(--text-muted);"><i
+                                    class="fa-solid fa-lightbulb"></i> Suggested:</span>
+                            <button class="chip-btn" onclick="setSearchQuery('Teaching')">Teaching</button>
+                            <button class="chip-btn" onclick="setSearchQuery('Design')">Design</button>
+                            <button class="chip-btn" onclick="setSearchQuery('Communication')">Communication</button>
+                            <button class="chip-btn" onclick="setSearchQuery('Awareness')">Awareness Campaigns</button>
+                            <button class="chip-btn" onclick="setSearchQuery('Patience')">Patience</button>
+                        </div>
+                    </div>
+                    <div id="ngo-results" class="matches-grid">
+                    </div>
+                </div>
+            </div>
+
+            <div id="badges-view" style="display: none;">
+                <div class="section-header" style="margin: 20px 0 0 20px;">
+                    <h2>🏆 My Achievements</h2>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Earn badges by completing service hours and
+                        upgrading your skills.</p>
+                </div>
+
+                <div
+                    style="background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-soft); padding: 24px; border-radius: var(--radius); display: flex; align-items: center; gap: 24px; margin-top: 24px;">
+                    <div>
+                        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">Prasanna's Trophy Case
+                        </h3>
+                        <p style="color: var(--text-muted); font-size: 14px; font-weight: 600;">Registered Volunteer •
+                            <i class="fa-solid fa-star" style="color: #f59e0b;"></i> Top 5% Contributor
+                        </p>
+                        <div style="display: flex; gap: 8px; margin-top: 12px; font-size: 16px;">
+                            <i class="fa-solid fa-seedling" style="color: #64748b;" title="Beginner Badge"></i>
+                            <i class="fa-solid fa-tree" style="color: #64748b;" title="Experienced Volunteer"></i>
+                            <i class="fa-solid fa-medal" style="color: #b45309;" title="Bronze Impact"></i>
+                        </div>
+                    </div>
+                    <div style="margin-left: auto; display: flex; gap: 16px; text-align: center;">
+                        <div
+                            style="background: var(--bg); padding: 12px 20px; border-radius: 12px; border: 1px solid var(--border);">
+                            <div style="font-size: 20px; font-weight: 800; color: var(--primary);">124</div>
+                            <div
+                                style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                                Hours</div>
+                        </div>
+                        <div
+                            style="background: var(--bg); padding: 12px 20px; border-radius: 12px; border: 1px solid var(--border);">
+                            <div style="font-size: 20px; font-weight: 800; color: var(--success);">5</div>
+                            <div
+                                style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                                Skills</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="matches-grid" id="badges-grid" style="margin-top: 24px;">
+                </div>
+            </div>
+
+            <div id="impact-view" style="display: none;">
+                <div class="section-header" style="margin: 20px 0 0 20px;">
+                    <h2>📈 Impact Report</h2>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Detailed statistics and graphs analyzing your
+                        volunteer performance with partner NGOs.</p>
+                </div>
+
+                <div class="impact-tracker" style="margin-top: 24px; margin-bottom: 24px;">
+                    <div class="stat-card" style="padding: 24px;">
+                        <div class="stat-icon purple" style="width: 50px; height: 50px; font-size: 20px;"><i
+                                class="fa-solid fa-globe"></i></div>
+                        <div class="stat-details">
+                            <h3 style="font-size: 24px;">14</h3>
+                            <p style="font-size: 11px;">Total Projects</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="padding: 24px;">
+                        <div class="stat-icon green" style="width: 50px; height: 50px; font-size: 20px;"><i
+                                class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <div class="stat-details">
+                            <h3 style="font-size: 24px;">$3.2k</h3>
+                            <p style="font-size: 11px;">Economic Value</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="padding: 24px;">
+                        <div class="stat-icon blue" style="width: 50px; height: 50px; font-size: 20px;"><i
+                                class="fa-solid fa-users"></i></div>
+                        <div class="stat-details">
+                            <h3 style="font-size: 24px;">850+</h3>
+                            <p style="font-size: 11px;">Lives Impacted</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-details-grid" style="padding: 0; gap: 24px;">
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="profile-card" style="padding-bottom: 32px;">
+                            <h3><i class="fa-solid fa-chart-line"></i> Hours by NGO Sector (YTD)</h3>
+                            <div style="height: 300px; width: 100%; position: relative;">
+                                <canvas id="ngoDistributionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="profile-card" style="padding-bottom: 32px;">
+                            <h3><i class="fa-solid fa-ranking-star"></i> Skill Utilization</h3>
+                            <div style="height: 300px; width: 100%; position: relative;">
+                                <canvas id="skillsRadarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="profile-card" style="height: 100%;">
+                            <h3><i class="fa-solid fa-clock-rotate-left"></i> Partner NGO Activity Log</h3>
+                            <div class="activity-feed">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profile-view" style="display: none;">
+                <div class="section-header" style="margin: 20px 0 0 20px;">
+                    <h2>👤 My Profile</h2>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Manage your personal details, skills, and
+                        contact info.</p>
+                </div>
+
+                <div class="profile-container">
+                    <div class="profile-cover"></div>
+
+                    <div class="profile-header-info">
+                        <img src="https://t4.ftcdn.net/jpg/04/86/97/27/360_F_486972750_hQVbv6yRJ9e615Eo3qvnujq7abDrXFGi.jpg" alt="Avatar" class="profile-main-avatar">
+                        <div class="profile-names">
+                            <h1>Prasanna Yerra</h1>
+                            <p>Global Ambassador & Top 5% Contributor</p>
+                        </div>
+                        <button class="edit-profile-btn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+                    </div>
+
+                    <div class="profile-details-grid">
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-address-card"></i> Personal Info</h3>
+                            <ul class="info-list">
+                                <li><strong>Email:</strong> prasannayerra630@gmail.com</li>
+                                <li><strong>Phone:</strong> +91 6303640038</li>
+                                <li><strong>Location:</strong> Vizag, Andhra Pradesh</li>
+                                <li><strong>Member Since:</strong> Oct 2023</li>
+                            </ul>
+                        </div>
+
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-heart"></i> Causes & Interests</h3>
+                            <div class="tags-container">
+                                <span class="tag"><i class="fa-solid fa-earth-americas"></i> Environmental</span>
+                                <span class="tag"><i class="fa-solid fa-graduation-cap"></i> Education</span>
+                                <span class="tag"><i class="fa-solid fa-venus"></i> Women's Rights</span>
+                                <span class="tag"><i class="fa-solid fa-house-chimney-medical"></i> Disaster
+                                    Relief</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-bolt"></i> Verified Skills</h3>
+                            <div class="tags-container">
+                                <span class="tag matched">Public Speaking</span>
+                                <span class="tag matched">Fundraising</span>
+                                <span class="tag matched">Leadership</span>
+                                <span class="tag matched">Project Management</span>
+                                <span class="tag matched">Empathy</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-award"></i> Active Badges</h3>
+                            <div class="profile-badges-mini">
+                                <i class="fa-solid fa-seedling" style="color: #64748b;" title="Beginner Badge"></i>
+                                <i class="fa-solid fa-tree" style="color: #64748b;" title="Experienced Volunteer"></i>
+                                <i class="fa-solid fa-medal" style="color: #b45309;" title="Bronze Impact"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 0 32px 32px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-chart-area"></i> Monthly Hours Logged</h3>
+                            <div style="height: 250px; width: 100%; position: relative;">
+                                <canvas id="profileHoursChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-bullseye"></i> Impact Score Trend</h3>
+                            <div style="height: 250px; width: 100%; position: relative;">
+                                <canvas id="profileScoreChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Toast Notification Container for 1-Click Apply -->
+        <div id="toast-container"></div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
