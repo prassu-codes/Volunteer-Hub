@@ -48,7 +48,6 @@ HTML5
 CSS3
 JavaScript
 Chart.js (for data visualization)
-Font Awesome (icons)
 Google Fonts
 
 🎯 Project Objective
